@@ -1,0 +1,39 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		{% for product in products %}
+		<div class="col-lg-4">
+		<a href="{% url 'post-detail' product.id %}"><img class="thumbnail"  src="{{product.imageURL}}" style=' object-fit: cover;'></a>
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
+
+				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+				
+
+				<a class="btn btn-outline-success" href="{% url 'post-detail' product.id %}">View</a>
+				<h4 style="display: inline-block; float: right"><strong>${{product.price}}</strong></h4>
+
+			</div>
+		</div>
+		{% endfor %}
+
+
+
+	</div>
+
+	<div class="row">
+
+
+
+     <h3 style="padding:10px">Page:</h3>
+			{% for i in paginator.page_range %}
+			<h3 style="padding:10px"><a href="?page={{i}}">{{i}}</a></h3>
+			{% endfor %}
+
+
+
+	</div><!-- /pagination -->
+
+{% endblock content %}

@@ -1,0 +1,92 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mehedi</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <!-- CSS -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+    <meta name="robots" content="noindex,follow" />
+
+  </head>
+
+  <body>
+    <main class="container">
+
+
+
+      <!-- Left Column / Headphones Image -->
+      <div class="left-column" style='margin-right:90px;'>
+        <img data-image="black" src="{{products.imageURL}}" alt="">
+        <img data-image="blue" src="{{products.imageURL}}" alt="">
+        <img data-image="red" class="active" src="{{products.imageURL}}" alt="">
+      </div>
+
+
+      <!-- Right Column -->
+      <div class="right-column">
+
+        <!-- Product Description -->
+        <div class="product-description">
+
+          <h2>{{products.name}}</h2>
+
+          <h5>{{products.description}}</h5>
+        </div>
+
+        <!-- Product Configuration -->
+        <div class="product-configuration">
+
+          <!-- Product Color -->
+          <div class="product-color">
+            <span>Color</span>
+
+            <div class="color-choose">
+              <div>
+                <input data-image="red" type="radio" id="red" name="color" value="red" checked>
+                <label for="red"><span></span></label>
+              </div>
+              <div>
+                <input data-image="blue" type="radio" id="blue" name="color" value="blue">
+                <label for="blue"><span></span></label>
+              </div>
+              <div>
+                <input data-image="black" type="radio" id="black" name="color" value="black">
+                <label for="black"><span></span></label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Cable Configuration -->
+          <div class="cable-config">
+
+
+
+
+            <a href="#">How to configurate your headphones</a>
+          </div>
+        </div>
+
+        <!-- Product Pricing -->
+        <div class="product-price">
+          <span><h3>${{products.price}}</h3></span>
+
+          <button data-product="{{products.id}}" data-action="add" class="btn btn-warning add-btn update-cart">Add to Cart</button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+    <script src="{% static 'js/script.js'%}" charset="utf-8"></script>
+  </body>
+</html>
+
+{% endblock %}

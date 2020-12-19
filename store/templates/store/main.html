@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Mehedi</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}">
+
+	<link rel="shortcut icon" href="{% static 'images/favicon.ico'%}">
+
+	<script type="text/javascript">
+	var user = '{{request.user}}'
+
+	function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getToken('csrftoken');
+
+
+function getCookie(name) {
+		// Split cookie string and get all individual name=value pairs in an array
+		var cookieArr = document.cookie.split(";");
+
+		// Loop through the array elements
+		for(var i = 0; i < cookieArr.length; i++) {
+				var cookiePair = cookieArr[i].split("=");
+
+				/* Removing whitespace at the beginning of the cookie name
+				and compare it with the given string */
+				if(name == cookiePair[0].trim()) {
+						// Decode the cookie value and return
+						return decodeURIComponent(cookiePair[1]);
+				}
+		}
+
+		// Return null if not found
+		return null;
+}
+var cart = JSON.parse(getCookie('cart'))
+
+if (cart == undefined) {
+	cart = {}
+	console.log('Cart was created.');
+	document.cookie = 'cart' + JSON.stringify(cart) + ";domain=;path=/"
+
+}
+console.log('Cart:',cart);
+
+	</script>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="{% url 'store' %}">Mehedi</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+					<div class="btn-group">
+	  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   {{user.username}}
+	  </button>
+	  <div class="dropdown-menu">
+	    <a class="dropdown-item" href="">Logout</a>
+		</div>
+	        <a class="nav-link" href=""><b></b> <span class="sr-only">(current)</span></a>
+	      </li>
+
+				<li>
+					<div class="btn-group">
+	  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    CATEGORIES
+	  </button>
+	  <div class="dropdown-menu">
+			<a class="dropdown-item" href="{% url 'men'%}">Mens Fashion</a>
+	    <a class="dropdown-item" href="{% url 'women'%}">Womens Fashion</a>
+	    <a class="dropdown-item" href="{% url 'kids'%}">Kids</a>
+			<a class="dropdown-item" href="{% url 'electronic'%}">Electronic</a>
+		 <a class="dropdown-item" href="{% url 'mobile'%}">Mobile</a>
+		 <a class="dropdown-item" href="{% url 'sports'%}">Sports</a>
+
+	</div>
+				</li>
+
+	    </ul>
+
+			<div class="" style='margin-right:30px'>
+				<form class="form-inline my-2 my-lg-0" method="get" action="/search" >
+	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	     </form>
+
+			</div>
+
+
+
+
+	    <div class="form-inline my-2 my-lg-0">
+	     	<a href="{% url 'login'%}"class="btn btn-warning">Login</a>
+
+	     	<a href="{% url 'cart' %}">
+	    		<img  id="cart-icon" src="{% static 'images/cart.png' %}">
+	    	</a>
+	    	<p id="cart-total">{{cartItems}}</p>
+
+	    </div>
+	  </div>
+
+	</nav>
+
+
+
+	<div class="left" style="margin-top:40px">
+
+
+ <a class="dropdown-item" style="background-color:white"href=""><h4><strong>CATEGORIES</string></h4></a>
+	<a class="dropdown-item" style="background-color:white"href="{% url 'men'%}"><strong>Mens Fashion</string></a>
+	<a class="dropdown-item" style="background-color:white"href="{% url 'women'%}"><strong>Womens Fashion</string></a>
+	<a class="dropdown-item" style="background-color:white" href="{% url 'kids'%}"><strong>Kids</string></a>
+	<a class="dropdown-item" style="background-color:white"href="{% url 'electronic'%}"><strong>Electronic</string></a>
+ <a class="dropdown-item" style="background-color:white"href="{% url 'mobile'%}"><strong>Mobile</string></a>
+ <a class="dropdown-item" style="background-color:white"href="{% url 'sports'%}"><strong>Sports</string></a>
+
+
+
+</div>
+
+
+
+     <div class="container" style="margin-top:-220px">
+            <br>
+            {% block content %}
+
+
+            {% endblock content %}
+         </div>
+
+
+      <br><br>
+
+				 <div class="card text-center">
+		   <div class="card-header" style="background:linear-gradient(to right, #0575E6, #00F260);">
+
+		   </div>
+		   <div class="card-body">
+		     <h4 class="card-title">E-Commerce websites are online portals that facilitate online transactions
+					 of goods and services</h4>
+		     <p class="card-text">I'm Mehedi Hasan,I am 21 years old Python Django Full-Stack Web Developer 💻 with a strong educational background in Software Engineering. I am doing freelance work 🚀 in Fiverr and Frelancer , but I do work remotely for international clients.</p>
+				 <div class="row" >
+           <p>
+             <a href="mailto:mehedihasan555552@gmail.com" style="margin-left: 380px;"
+               ><i class="fas fa-envelope-open"></i> mehedihasan555552@gmail.com</a
+             >
+           </p>
+           <p>
+             <a href="https://www.fiverr.com/mehedi555552?up_rollout=true" target="_blank" style="margin-left: 120px;">
+               <i class="fab fa-fiverr"> Fiverr</i></a
+             >
+           </p>
+           <p>
+             <a href="https://www.linkedin.com/in/mehedi-hasan-b402b4116/" target="_blank" style="margin-left: 120px;">
+               <i class="fab fa-linkedin"> Linkedin</i></a
+             >
+           </p>
+           <p>
+             <a href="https://twitter.com/ridoy123439" target="_blank" style="margin-left: 120px;">
+               <i class="fab fa-twitter"> Twitter</i></a
+             >
+           </p>
+         </div>
+		   </div>
+		   <div class="card-footer text-muted" style="background:linear-gradient(to right, #070000, #4C0001, #070000);">
+				 © 2020 Copyright:
+    <a href="http://mehedi555552.pythonanywhere.com/" target="_blank"> MEHEDI HASAN</a>
+		   </div>
+		 </div>
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/dark.js' %}"></script>
+</body>
+</html>
