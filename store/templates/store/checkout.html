@@ -154,7 +154,11 @@
    	.then((response)=> response.json())
    	.then((data)=> {
    		console.log('Success:',data);
-   		alert ('Order Completed.');
+      // alert('Order Completed.');
+      // swal("Hello world!");
+     swal("Your Order has been Placed!", "Thank You!", "success");
+
+
 
       cart = {}
       document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
